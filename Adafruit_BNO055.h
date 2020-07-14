@@ -68,6 +68,9 @@ public:
     /* Page id register definition */
     BNO055_PAGE_ID_ADDR = 0X07,
 
+    BNO055_ACC_CONFIG_ADDR = 0x08,
+
+
     /* PAGE0 REGISTER DEFINITION START*/
     BNO055_CHIP_ID_ADDR = 0x00,
     BNO055_ACCEL_REV_ID_ADDR = 0x01,
@@ -309,6 +312,8 @@ public:
   void setSensorOffsets(const uint8_t *calibData);
   void setSensorOffsets(const adafruit_bno055_offsets_t &offsets_type);
   bool isFullyCalibrated();
+
+  void setAccelRange(uint8_t range);
 
   /* Power managments functions */
   void enterSuspendMode();

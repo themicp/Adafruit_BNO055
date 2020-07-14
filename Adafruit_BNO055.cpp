@@ -861,6 +861,28 @@ byte Adafruit_BNO055::read8(adafruit_bno055_reg_t reg) {
   return value;
 }
 
+void Adafruit_BNO055::setAccelRange(uint8_t range) {
+  adafruit_bno055_opmode_t modeback = _mode;
+
+  /* Switch to config mode (just in case since this is the default) */
+  setMode(OPERATION_MODE_CONFIG);
+  delay(25);
+
+  /* save selected page ID and switch to page 1 */
+  uint8_t savePageID = read8(BNO055_PAGE_ID_ADDR);
+  write8(BNO055_PAGE_ID_ADDR, 0X01);
+
+  write8(BNO055_ACC_CONFIG_ADDR, range);
+  delay(10);
+
+  /* restore page ID */
+  write8(BNO055_PAGE_ID_ADDR, savePageID);
+
+  /* Set the requested operating mode (see section 3.3) */
+  setMode(modeback);
+  delay(20);
+}
+
 /*!
  *  @brief  Reads the specified number of bytes over I2C
  */
